@@ -1,0 +1,36 @@
+# Set up mutt to use our local maildir:
+set mbox_type=Maildir
+set use_envelope_from=yes
+
+set charset="utf-8"
+set locale=`echo "${LC_ALL:-${LC_TIME:-${LANG}}}"`
+
+set fcc_clear=yes #pgp mails unverschlüsselt specihern
+set maildir_header_cache_verify = no
+set header_cache=~/.cache/mutt
+set mask=
+set markers=no
+
+folder-hook . 'set read_inc=10000' # ??
+
+set sort=reverse-threads
+set sort_aux=last-date-received
+set edit_headers
+set smime_ca_location="/usr/local/share/certs/ca-root.crt"
+
+set pager_index_lines = 30
+set index_format = "%4C %Z %{%b %d} %-33.33L %s"
+
+source dotfiles/mutt/headers
+source dotfiles/mutt/sidebar
+source dotfiles/mutt/colors
+source dotfiles/mutt/gpg
+source dotfiles-private/muttrc-private
+
+bind pager \024 decrypt-save
+
+#set query_command="lbdbq '%s'"
+set query_command="mutt_vc_query '%s'"
+
+set mime_forward=yes
+set mime_forward_rest=yes

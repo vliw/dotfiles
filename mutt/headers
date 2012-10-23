@@ -1,0 +1,9 @@
+ignore *
+unignore From:
+unignore To:
+unignore Cc:
+unignore Bcc:
+unignore Subject:
+unignore Delivered-to:
+unignore User-Agent:
+unignore X-Mailer:
