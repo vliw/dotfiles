@@ -81,10 +81,14 @@ end
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {}
-for s = 1, screen.count() do
-    -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8 }, s, layouts[1])
-end
+
+-- main screen
+local s = 1
+tags[s] = awful.tag({ "mail", "quassel", "luakit real", "sync", "shell", "shell2", "luakit pir", "misc" }, s, layouts[3])
+
+-- second screen
+s = 2
+tags[s] = awful.tag({ "media", "mplayer", "shell1", "shell2"}, s, layouts[3])
 -- }}}
 
 -- {{{ Menu
@@ -211,6 +215,7 @@ root.buttons(awful.util.table.join(
 -- }}}
 
 -- {{{ Key bindings
+local screen = mouse.screen
 globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
@@ -269,7 +274,16 @@ globalkeys = awful.util.table.join(
                   awful.util.getdir("cache") .. "/history_eval")
               end),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    awful.key({ modkey }, "p", function() menubar.show() end),
+    
+    awful.key({ modkey }, "1", function() awful.tag.viewonly(tags[screen][1]) end),
+    awful.key({ modkey }, "2", function() awful.tag.viewonly(tags[screen][2]) end),
+    awful.key({ modkey }, "3", function() awful.tag.viewonly(tags[screen][3]) end),
+    awful.key({ modkey }, "4", function() awful.tag.viewonly(tags[screen][4]) end),
+    awful.key({ modkey }, "5", function() awful.tag.viewonly(tags[screen][5]) end),
+    awful.key({ modkey }, "0xfc", function() awful.tag.viewonly(tags[screen][6]) end),
+    awful.key({ modkey }, ",", function() awful.tag.viewonly(tags[screen][7]) end),
+    awful.key({ modkey }, ".", function() awful.tag.viewonly(tags[screen][8]) end)
 )
 
 clientkeys = awful.util.table.join(
@@ -293,7 +307,7 @@ clientkeys = awful.util.table.join(
 )
 
 -- Compute the maximum number of digit we need, limited to 9
-keynumber = 0
+--[[ keynumber = 0
 for s = 1, screen.count() do
    keynumber = math.min(9, math.max(#tags[s], keynumber))
 end
@@ -330,6 +344,8 @@ for i = 1, keynumber do
                       end
                   end))
 end
+--]]
+
 
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
