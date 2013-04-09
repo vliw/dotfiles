@@ -360,7 +360,7 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
+      properties = { border_width = 0, --beautiful.border_width,
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
                      keys = clientkeys,
@@ -442,3 +442,8 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+awful.util.spawn_with_shell("compton --active-opacity 0.9 -i 0.4 --use-ewmh-active-win")
+awful.util.spawn_with_shell("parcellite")
+awful.util.spawn_with_shell("urxvtd")
+awful.util.spawn_with_shell("xidle -program /usr/bin/xtrlock -timeout 20")
